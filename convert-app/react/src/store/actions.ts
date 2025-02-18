@@ -1,16 +1,11 @@
-import { ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM, Item } from './types';
+import { ADD_TASK, DELETE_TASK, Task } from './types';
 
-export const addItem = (item: Item) => ({
-  type: ADD_ITEM,
-  payload: item,
+export const addTask = (task: Task) => ({
+  type: ADD_TASK,
+  payload: task,
 });
 
-export const removeItem = (id: number) => ({
-  type: REMOVE_ITEM,
-  payload: id,
-});
-
-export const updateItem = (item: Item) => ({
-  type: UPDATE_ITEM,
-  payload: item,
+export const deleteTask = (index: number) => ({
+  type: DELETE_TASK,
+  payload: index,
 });

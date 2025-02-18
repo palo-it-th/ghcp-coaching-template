@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTask, deleteTask } from '../store/actions';
+import { AppState } from '../store/types';
 import './TodoList.css';
 
-interface Task {
-  task: string;
-  deadline: string;
-}
-
 function TodoList() {
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [task, setTask] = useState<string>('');
   const [deadline, setDeadline] = useState<string>('');
   const [assignee, setAssignee] = useState<string>('');
+  
+  const dispatch = useDispatch();
+  const tasks = useSelector((state: AppState) => state.tasks);
 
-  const addTask = () => {
+  const handleAddTask = () => {
     if (task && deadline) {
-      setTasks([...tasks, { task, deadline }]);
+      dispatch(addTask({ task, deadline, assignee }));
       setTask('');
       setDeadline('');
       setAssignee('');
+    }else {
+      alert('Please fill all fields');
     }
   };
 
-  const deleteTask = (index: number) => {
-    const newTasks = tasks.filter((_, i) => i !== index);
-    setTasks(newTasks);
+  const handleDeleteTask = (index: number) => {
+    dispatch(deleteTask(index));
   };
 
   return (
@@ -47,13 +48,13 @@ function TodoList() {
           value={assignee}
           onChange={(e) => setAssignee(e.target.value)}
         />
-        <button onClick={addTask}>Add Task</button>
+        <button onClick={handleAddTask}>Add Task</button>
       </div>
       <ul>
         {tasks.map((t, index) => (
           <li key={index}>
-            <span>{t.task} - {t.deadline}</span>
-            <button onClick={() => deleteTask(index)}>Delete</button>
+            <span>{t.task} - {t.deadline} - {t.assignee}</span>
+            <button onClick={() => handleDeleteTask(index)}>Delete</button>
           </li>
         ))}
       </ul>
@@ -61,4 +62,4 @@ function TodoList() {
   );
 }
 
-export default TodoList; 
+export default TodoList;

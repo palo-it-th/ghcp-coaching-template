@@ -1,12 +1,17 @@
-export const ADD_ITEM = 'ADD_ITEM';
-export const REMOVE_ITEM = 'REMOVE_ITEM';
-export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const ADD_TASK = 'ADD_TASK';
+export const DELETE_TASK = 'DELETE_TASK';
 
-export interface Item {
-  id: number;
-  name: string;
+export interface Task {
+  task: string;
+  deadline: string;
+  assignee: string;
 }
 
 export interface AppState {
-  items: Item[];
+  tasks: Task[];
+}
+
+export interface AddTaskAction {
+  type: typeof ADD_TASK | typeof DELETE_TASK;
+  payload: Task;
 }

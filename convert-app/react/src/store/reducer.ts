@@ -1,27 +1,21 @@
-import { ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM, AppState } from './types';
+import { ADD_TASK, DELETE_TASK, AppState } from './types';
 
 const initialState: AppState = {
-  items: [],
+  tasks: [],
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case ADD_ITEM:
+    case ADD_TASK:
       return {
         ...state,
-        items: [...state.items, action.payload],
+        tasks: [...state.tasks, action.payload],
       };
-    case REMOVE_ITEM:
+    case DELETE_TASK:
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload),
-      };
-    case UPDATE_ITEM:
-      return {
-        ...state,
-        items: state.items.map(item => 
-          item.id === action.payload.id ? action.payload : item
-        ),
+        tasks: state.tasks.filter((_, index) => index !== action.payload),
       };
     default:
       return state;
